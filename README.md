@@ -1,50 +1,50 @@
-# Objetivo
+# SAT solver problem
 
-El objetivo de este proyecto es aprender a modelar un problema en CNF, y a usar un SAT solver para resolverlo, así como traducir la salida del SAT solver a un formato legible.
-No solo se evaluará que la implementación funcione, sino la eficiencia de su traducción a CNF del problema.
+The objective of this project is to learn how to model a problem in CNF, and how to use a SAT solver to solve it, as well as translate the output of the SAT solver into a readable format.
+Not only will the implementation work, but also the efficiency of its translation into CNF of the problem.
 
-# Problema a resolver
+# Problem to solve
 
-Imagine que se está organizando un torneo, y se le pide realizar un programa que encuentre una asignación de fecha y hora en la que los juegos van a ocurrir. Las reglas son las siguientes:
+Imagine that you are organizing a tournament, and you are asked to make a program that finds a date and time assignment in which the games are going to occur. The rules are the following:
 
-* Todos los participantes deben jugar dos veces con cada uno de los otros participantes, una como "visitantes" y la otra como "locales". Esto significa que, si hay 10 equipos, cada equipo jugará 18 veces.
-* Dos juegos no pueden ocurrir al mismo tiempo.
-* Un participante puede jugar a lo sumo una vez por día.
-* Un participante no puede jugar de "visitante" en dos días consecutivos, ni de "local" dos días seguidos.
-* Todos los juegos deben empezar en horas "en punto" (por ejemplo, las 13:00:00 es una hora válida pero las 13:30:00 no).
-* Todos los juegos deben ocurrir entre una fecha inicial y una fecha final especificadas. Pueden ocurrir juegos en dichas fechas.
-* Todos los juegos deben ocurrir entre un rango de horas especificado, el cuál será fijo para todos los días del torneo.
-* A efectos prácticos, todos los juegos tienen una duración de dos horas.
+* All participants must play twice with each of the other participants, once as "visitors" and once as "homes". This means that if there are 10 teams, each team will play 18 times.
+* Two games cannot occur at the same time.
+* A participant can play at most once per day.
+* A participant cannot play as a "visitor" on two consecutive days, nor as a "home" player on two consecutive days.
+*All games must start "on the dot" (for example, 13:00:00 is a valid time but 13:30:00 is not).
+*All games must occur between a specified start date and end date. Games may occur on these dates.
+*All games must occur between a specified time range, which will be fixed for all days of the tournament.
+*For practical purposes, all games last two hours.
 
-# Formato de entrada
+# Input format
 
-Su sistema debe recibir un JSON con el siguiente formato (asuma que siempre recibirá el formato correcto):
+Your system should receive a JSON in the following format (assume you will always receive the correct format):
 
 ```
 {
-  "tournament_name": String. Nombre del torneo,
-  "start_date": String. Fecha de inicio del torneo en formato ISO 8601,
-  "end_date": String. Fecha de fin del torneo en formato ISO 8601,
-  "start_time": String. Hora a partir de la cuál pueden ocurrir los juegos en cada día, en formato ISO 8601,
-  "end_time": String. Hora hasta la cuál pueden ocurrir los juegos en cada día, en formato ISO 8601,
-  "participants": [String]. Lista con los nombres de los participantes en el torneo
+ "tournament_name": String. Tournament name,
+ "start_date": String. Tournament start date in ISO 8601 format,
+ "end_date": String. End date of the tournament in ISO 8601 format,
+ "start_time": String. Time from which games can occur each day, in ISO 8601 format,
+ "end_time": String. Time up to which games can occur each day, in ISO 8601 format,
+ "participants": [String]. List with the names of the participants in the tournament
 }
 ```
 
-Asuma que todas las horas vienen sin zona horaria especificada, y asuma por lo tanto que su zona horaria es UTC.
+Assume that all times come with no time zone specified, and therefore assume that your time zone is UTC.
 
-# Actividad 1
+# Activity 1
 
-Deben crear una traducción del problema a formato CNF, y luego deben crear un programa, en el lenguaje de programación que sea de su agrado, que traduzca cualquier JSON en el formato propuesto a la representación del problema en formato [DIMACS CNF](https://people.sc.fsu.edu/~jburkardt/data/cnf/cnf.html)
+They must create a translation of the problem into CNF format, and then they must create a program, in the programming language of their choice, that translates any JSON in the proposed format to the representation of the problem in [DIMACS CNF] format (https: //people.sc.fsu.edu/~jburkardt/data/cnf/cnf.html)
 
-# Actividad 2
+# Activity 2
 
-Usando la transformación creada en la parte anterior, los archvios en formato DIMACS CNF pueden ser usados como entrada para el SAT solver [Glucose](https://www.labri.fr/perso/lsimon/glucose/). Debe crear un programa, en el lenguaje de programación que sea de su agrado, que traduzca la salida de Glucose al resolver el problema en un archivo con el mismo nombre del torneo y extensión `.ics`, en formato de [iCalendar](https://en.wikipedia.org/wiki/ICalendar) de manera que sea posible agregar la asignación de los juegos a un gestor de calendarios. Para ello puede usar cualquier librería que considere necesaria. Los eventos del calendario deben tener ocurrir a la hora que fue asignada cumpliendo todas las reglas dadas, y deben indicar quiénes son los participantes en el juego, quién es el "local" y quién es el "visitante".
+Using the transformation created in the previous part, the files in DIMACS CNF format can be used as input for the SAT solver [Glucose](https://www.labri.fr/perso/lsimon/glucose/). You must create a program, in the programming language of your choice, that translates the output of Glucose when solving the problem into a file with the same tournament name and `.ics` extension, in [iCalendar](https ://en.wikipedia.org/wiki/ICalendar) so that it is possible to add the assignment of the games to a calendar manager. To do this you can use any library you consider necessary. Calendar events must occur at the assigned time, complying with all given rules, and must indicate who the participants in the game are, who is the "home" and who is the "away."
 
-# Actividad 3
+# Activity 3
 
-Debe crear un cliente que maneje todo el proceso. Es decir, reciba un JSON en el formato de entrada, ejecute el programa que lo transforma en CNF, introduzca el resultado  en Glucose, y se asegure de que se cree el archivo .ics con la respuesta, o falle en caso de ser UNSAT. Debe generar casos de prueba fáciles y difíciles, y medir el rendimiento de su solución.
+You must create a client that handles the entire process. That is, receive a JSON in the input format, run the program that transforms it into CNF, enter the result into Glucose, and ensure that the .ics file with the response is created, or fail if it is UNSAT. You should generate easy and difficult test cases and measure the performance of your solution.
 
-# Entrega
+# To submit the assignment
 
-Deben tener un repositorio con todo el código usado y un informe que describa su solución, sus resultados experimentales, así como instrucciones específicas para ejecutar todo el proceso.
+They should have a repository with all the code used and a report describing their solution, their experimental results, as well as specific instructions for executing the entire process.
