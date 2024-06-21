@@ -48,3 +48,22 @@ You must create a client that handles the entire process. That is, receive a JSO
 # To submit the assignment
 
 They should have a repository with all the code used and a report describing their solution, their experimental results, as well as specific instructions for executing the entire process.
+
+# Requirements
+- Python
+  
+# How to install the project:
+1. Run the git command below:
+```
+git clone https://github.com/PanquecaFuriosa/SAT-Solver-for-Calendar
+```
+2. Install all dependecies with the next command:
+```
+pip install -r requirements.py
+```
+
+# How to run the project
+1. Run the bash command below:
+```
+python main.py
+```
